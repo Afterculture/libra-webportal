@@ -89,18 +89,19 @@ export default Service.extend(AresConfig, {
           method: "POST",
           body: JSON.stringify(body)
         });
-        
+
         if (!response) {
-          throw new Error(`No response from game for $(cmd).`);
+          throw new Error(`No response from game for ${cmd}.`);
         }
         return response.json();        
       }
       catch(ex) {
         this.reportError(ex);
-        return this.buildFailurePromise(`No response from game $(cmd).`);
+        return this.buildFailurePromise(`No response from game ${cmd}.`);
       }        
     },
     
+    // Pass null to transitionToOnError to stay on the page (so you can show a failure message)
     requestOne(cmd, args = {}, transitionToOnError = 'home') {
         return this.request(cmd, args).then((response) => {
           if (!response) {
@@ -117,6 +118,7 @@ export default Service.extend(AresConfig, {
         });
     },
 
+    // Pass null to transitionToOnError to stay on the page (so you can show a failure message)
     requestMany(cmd, args = {}, transitionToOnError = 'home') {    
         return this.request(cmd, args).then((response) => {
           if (!response) {
